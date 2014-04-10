@@ -1,0 +1,49 @@
+#:kivy 1.8.0
+
+
+<FrontScreen>:
+    FloatLayout:      
+        Image:
+            source: 'Assets_Room.png'
+            size: self.size
+        Button:
+            text: 'go left'
+            size_hint: .2,.2
+            on_press: root.manager.current = 'left'
+            pos: 600,100
+        Button:
+            size_hint: .2,.2
+            text: 'go right'
+            pos: 1,100
+            on_press: 
+                root.manager.current = 'left'
+        Image:
+            source: 'Assets_Door.png'
+            size_hint: .2, .5
+            pos: 300, 140
+
+<LeftScreen>:
+    FloatLayout:
+        Image:
+            source: 'Assets_Room.png'
+            size: self.size
+        Button:
+            size_hint: .2,.2
+            pos: 20,20
+            text: 'Hello World'
+            on_press: root.manager.current = 'front'
+        Image:
+            source: 'Asset_Window.png'
+            size_hint: .2,.3
+            pos: 400, 300
+        Image:
+            source: 'Asset_Candle.png'
+            size_hint: .01, .2
+            pos: 200, 300
+
+<BackgroundScreenManager>
+    canvas.before:
+        BorderImage:
+            texture: self.bk_img.texture
+            pos: self.pos
+            size: self.size
