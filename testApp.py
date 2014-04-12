@@ -1,25 +1,4 @@
-#from kivy.app import App
-#from kivy.uix.gridlayout import GridLayout
-#from kivy.uix.label import Label
-#from kivy.uix.textinput import TextInput
-#from kivy.uix.boxlayout import BoxLayout
-#from kivy.uix.popup import PopUp
-
-#
-#class LoginScreen(GridLayout):
-#
-#    def __init__(self, **kwargs):
-#        super(LoginScreen, self).__init__(**kwargs)
-#        self.cols = 2
-#        self.add_widget(Label(text='User Name'))
-#        self.username = TextInput(multiline=False)
-#        self.add_widget(self.username)
-#        self.add_widget(Label(text='password'))
-#        self.password = TextInput(password=True, multiline=False)
-#        self.add_widget(self.password)
-#        
-
-
+import sys
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -40,11 +19,24 @@ class TestApp(App):
     def executeText(self, evt=None):
         '''saves user input as a variable to be executed'''
         userInput = self.userInput.text
-        exec(userInput)
+        try:
+            exec(userInput)
+        except:
+            e = str(sys.exc_info()[0])
+            self.showError(e)
+           
+            
+    def showError(self, whatsWrong):
+        name = 'Oops, looks like there was an error'
+        layout = BoxLayout(orientation = 'vertical', height = 200)
+        text = Label(text = whatsWrong)
+        layout.add_widget(text)
+        error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
+        error.open()
         
     def popup_display(self, title,  widget):
-        btnenter = Button(text = 'enter', size_hint_y = None, size_hint_x = 0.5, height =50)
-        btnclose = Button(text='Close me', size_hint_y=None, size_hint_x = 0.5, height=50)
+        btnenter = Button(text = 'try code', size_hint_y = None, size_hint_x = 0.5, height =50)
+        btnclose = Button(text='Close', size_hint_y=None, size_hint_x = 0.5, height=50)
         self.userInput = TextInput(size_hint = (1,1))
 
         layout = BoxLayout(orientation='vertical', height = 300)
