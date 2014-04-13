@@ -4,7 +4,7 @@ Created on Sun Apr  6 18:25:41 2014
 
 @author: gabrielle
 """
-
+import sys
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from kivy.lang import Builder
@@ -28,7 +28,20 @@ class ImgBtn(ButtonBehavior, Image):
     def executeText(self, evt=None):
         '''saves user input as a variable to be executed'''
         userInput = self.userInput.text
-        exec(userInput)
+        try:
+            exec(userInput)
+        except:
+            e = str(sys.exc_info()[0])
+            self.showError(e)
+           
+            
+    def showError(self, whatsWrong):
+        name = 'Oops, looks like there was an error'
+        layout = BoxLayout(orientation = 'vertical', height = 200)
+        text = Label(text = whatsWrong)
+        layout.add_widget(text)
+        error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
+        error.open()
         
     def popup_display(self, title):
         btnenter = Button(text = 'enter', size_hint_y = None, size_hint_x = 0.5, height =50)
