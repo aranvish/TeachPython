@@ -2,7 +2,7 @@
 
 
 <FrontScreen>:
-    FloatLayout:      
+    FloatLayout:  
         Image:
             source: 'Assets_Room.png'
             size: self.size
@@ -15,95 +15,107 @@
                 root.manager.current = 'left'
             pos: 600,100
         ImgBtn:
+            source: 'Assets_Arrow.png'
             size_hint: .2,.2
             text: 'go right'
             pos: 1,100
             on_press: 
                 root.manager.transition.direction = 'right'
-                root.manager.current = 'left'
+                root.manager.current = 'right'
         ImgBtn:
             source: 'Assets_Door2.png'
             size_hint: .2, .5
             pos: 300, 140
             on_press:
                 self.popup_display("type your code here:")
+        Label:
+            text: "Front"    
             
 
 <LeftScreen>:
+    FloatLayout:   
+        Image:
+            source: 'Assets_Room.png'
+            size: self.size
+        Label:
+            text: "Left"   
+        ImgBtn:
+            source: 'Asset_Candle.png'
+            size_hint: .01, .2
+            pos: 200, 300
+            on_press: root.manager.current = 'right'
+        Image:
+            source: "Assets_Terminal2.png"
+        ImgBtn:
+            source: 'Assets_Arrow.png'
+            text: 'go left'
+            size_hint: .2,.2
+            on_press: 
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'back'
+            pos: 600,100
+        ImgBtn:
+            source: 'Assets_Arrow.png'
+            size_hint: .2,.2
+            text: 'go right'
+            pos: 1,100
+            on_press: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'front'
+
+<RightScreen>:
+    FloatLayout:  
+        Image:
+            source: 'Assets_Room.png'
+            size: self.size
+        Label:
+            text: "Right"   
+        ImgBtn:
+            source: 'Asset_Lamp.png'
+            
+            on_press: root.manager.current = 'left'
+        ImgBtn:
+            source: 'Assets_Arrow.png'
+            text: 'go left'
+            size_hint: .2,.2
+            on_press: 
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'front'
+            pos: 600,100
+        ImgBtn:
+            source: 'Assets_Arrow.png'
+            size_hint: .2,.2
+            text: 'go right'
+            pos: 1,100
+            on_press: 
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'back'
+
+<BackScreen>:
     FloatLayout:
         Image:
             source: 'Assets_Room.png'
             size: self.size
-        Button:
-            size_hint: .2,.2
-            pos: 20,20
-            text: 'Hello World'
-            on_press: root.manager.current = 'front'
-        Image:
-            source: 'Asset_Window.png'
-            size_hint: .2,.3
-            pos: 400, 300
-        Image:
-            source: 'Asset_Candle.png'
-            size_hint: .01, .2
-            pos: 200, 300
-
-<RightScreen>:
-    FloatLayout:      
-        Image:
-            source: 'Assets_Room.png'
-            size: self.size
+        Label:
+            text: "Back"
         ImgBtn:
             source: 'Assets_Arrow.png'
             text: 'go left'
             size_hint: .2,.2
             on_press: 
                 root.manager.transition.direction = 'left'
-                root.manager.current = 'left'
+                root.manager.current = 'right'
             pos: 600,100
-        ImgBtn:
-            size_hint: .2,.2
-            text: 'go right'
-            pos: 1,100
-            on_press: 
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'left'
-        ImgBtn:
-            source: 'Assets_Door2.png'
-            size_hint: .2, .5
-            pos: 300, 140
-            on_press:
-                root.manager.current = 'left'
-        ImgBtn:
-            source: 'Assets_Terminal2'
-            
-
-<BackScreen>:
-    FloatLayout:      
-        Image:
-            source: 'Assets_Room.png'
-            size: self.size
         ImgBtn:
             source: 'Assets_Arrow.png'
-            text: 'go left'
-            size_hint: .2,.2
-            on_press: 
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'left'
-            pos: 600,100
-        ImgBtn:
             size_hint: .2,.2
             text: 'go right'
             pos: 1,100
             on_press: 
                 root.manager.transition.direction = 'right'
-                root.manager.current = 'right'
-        ImgBtn:
-            source: 'Assets_Door2.png'
-            size_hint: .2, .5
-            pos: 300, 140
-            on_press:
-                root.manager.current = 'right'
+                root.manager.current = 'left'
+
+
 
 <BackgroundScreenManager>
     canvas.before:
