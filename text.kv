@@ -1,0 +1,33 @@
+#:kivy 1.8.0
+
+<textPopUp>:
+    title: 'TestApp'
+    size: 300, 400
+    size_hint: None, None
+    id: Input
+    
+    BoxLayout:
+
+        orientation: 'vertical'
+        TextInput:
+            text: 'hello, how are you?'
+            size_hint: 1, 1
+            id: code
+
+        Button:
+            text: 'close me'
+            size_hint_x: 0.5
+            size_hint_y: None
+            height: 50
+            on_release:
+                Input.dismiss()
+
+        Button:
+            text: 'Try Code!'
+            size_hint_x: 0.5
+            size_hint_y: None
+            height: 50
+            on_release:
+                Input.textBind(code.text)
+                
+
