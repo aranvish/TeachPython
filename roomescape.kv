@@ -15,24 +15,30 @@
         orientation: 'vertical'
         TextInput:
             text: '#Type your code below'
-            size_hint: 1, 1
+            size_hint: 1, None
+            height: 285
             id: code
 
-        Button:
-            text: 'close me'
-            size_hint_x: 0.5
-            size_hint_y: None
-            height: 50
-            on_release:
-                Input.dismiss()
+        BoxLayout:
+            orientation: 'horizontal'
 
-        Button:
-            text: 'Try Code!'
-            size_hint_x: 0.5
-            size_hint_y: None
-            height: 50
-            on_release:
-                Input.textBind(code.text)
+            Button:
+                text: 'Try Code!'
+                size_hint_x: 0.5
+                size_hint_y: None
+                height: 50
+                on_release:
+                    Input.textBind(code.text)
+
+            Button:
+                text: 'close me'
+                size_hint_x: 0.5
+                size_hint_y: None
+                height: 50
+                on_release:
+                    Input.dismiss()
+    
+
                 
 <FrontScreen>:
     FloatLayout:
