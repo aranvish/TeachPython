@@ -14,7 +14,7 @@ class TestApp(App):
     '''A test app designed to create a pop up with text instructions and to 
     allow for the input of text which will hopefully be bound so it can be executed'''      
     def build(self):
-        return Button(on_press=partial(self.popup_display, "Type your code here:"))
+        return Button(on_press=partial(self.popup_display, "Type your code here:", 'replace this with your own Code'))
         
     def executeText(self, evt=None):
         '''saves user input as a variable to be executed'''
@@ -34,20 +34,20 @@ class TestApp(App):
         error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
         error.open()
         
-    def popup_display(self, title,  widget):
+    def popup_display(self, title, baseText, widget):
         btnenter = Button(text = 'try code', size_hint_y = None, size_hint_x = 0.5, height =50)
         btnclose = Button(text='Close', size_hint_y=None, size_hint_x = 0.5, height=50)
-        self.userInput = TextInput(size_hint = (1,1))
+        self.userInput = TextInput(text = baseText, size_hint = (1,1))
 
         layout = BoxLayout(orientation='vertical', height = 300)
 #        layout.add_widget(Label(text = message, size_hint = (1, 1)))
         layout.add_widget(self.userInput)
         layout.add_widget(btnenter)
         layout.add_widget(btnclose)
-        sv = ScrollView(size_hint=(None, None), size=(300, 300),
+        sv = ScrollView(size_hint=(None, None), size=(300, 400),
                         pos_hint={'center_x':0.5, 'center_y':.5})
         sv.add_widget(layout)
-        popup = Popup(content=sv, title=title, size_hint=(None, None), size=(325, 350), auto_dismiss=True)
+        popup = Popup(content=sv, title=title, size_hint=(None, None), size=(325, 450), auto_dismiss=True)
         btnclose.bind(on_release=popup.dismiss)
         btnenter.bind(on_release=self.executeText)
         popup.open()
@@ -77,14 +77,3 @@ if __name__ == '__main__':
 #        root.add_widget(layout)
 #        return root
 #
-#if __name__ == '__main__':
-#    SMApp().run()
-
-#    
-#class chatApp(App):
-#    def build(self):
-#        return LoginScreen()
-
-#
-#if __name__ == '__main__':
-#    chatApp().run()
