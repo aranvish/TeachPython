@@ -1,13 +1,15 @@
 #:kivy 1.8.0
 
 
+
+[Popup_Button@ButtonBehavior+Button]
 <FrontScreen>:
-    FloatLayout:  
+    FloatLayout:
         Image:
             source: 'Assets_Room.png'
-            size: self.size
+            size: self.size  
         ImgBtn:
-            source: 'Assets_Arrow.png'
+            source: 'assets_arrows_left.png'
             text: 'go left'
             size_hint: .2,.2
             on_press: 
@@ -15,7 +17,7 @@
                 root.manager.current = 'left'
             pos: 600,100
         ImgBtn:
-            source: 'Assets_Arrow.png'
+            source: 'assets_arrows_right.png'
             size_hint: .2,.2
             text: 'go right'
             pos: 1,100
@@ -40,14 +42,14 @@
         Label:
             text: "Left"   
         ImgBtn:
-            source: 'Asset_Candle.png'
+            source: 'Assets_Candle.png'
             size_hint: .01, .2
             pos: 200, 300
             on_press: root.manager.current = 'right'
         Image:
             source: "Assets_Terminal2.png"
         ImgBtn:
-            source: 'Assets_Arrow.png'
+            source: 'assets_arrows_left.png'
             text: 'go left'
             size_hint: .2,.2
             on_press: 
@@ -55,7 +57,7 @@
                 root.manager.current = 'back'
             pos: 600,100
         ImgBtn:
-            source: 'Assets_Arrow.png'
+            source: 'assets_arrows_right.png'
             size_hint: .2,.2
             text: 'go right'
             pos: 1,100
@@ -71,11 +73,11 @@
         Label:
             text: "Right"   
         ImgBtn:
-            source: 'Asset_Lamp.png'
+            source: 'Assets_Lamp.png'
             
             on_press: root.manager.current = 'left'
         ImgBtn:
-            source: 'Assets_Arrow.png'
+            source: 'assets_arrows_left.png'
             text: 'go left'
             size_hint: .2,.2
             on_press: 
@@ -83,7 +85,7 @@
                 root.manager.current = 'front'
             pos: 600,100
         ImgBtn:
-            source: 'Assets_Arrow.png'
+            source: 'assets_arrows_right.png'
             size_hint: .2,.2
             text: 'go right'
             pos: 1,100
@@ -99,7 +101,7 @@
         Label:
             text: "Back"
         ImgBtn:
-            source: 'Assets_Arrow.png'
+            source: 'assets_arrows_left.png'
             text: 'go left'
             size_hint: .2,.2
             on_press: 
@@ -107,7 +109,7 @@
                 root.manager.current = 'right'
             pos: 600,100
         ImgBtn:
-            source: 'Assets_Arrow.png'
+            source: 'assets_arrows_right.png'
             size_hint: .2,.2
             text: 'go right'
             pos: 1,100
