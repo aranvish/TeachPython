@@ -3,6 +3,35 @@
 
 
 [Popup_Button@ButtonBehavior+Button]
+<textPopUp>:
+    title: 'TestApp'
+    size: 300, 400
+    size_hint: None, None
+    id: Input
+    
+    BoxLayout:
+
+        orientation: 'vertical'
+        TextInput:
+            text: '#Type your code below'
+            size_hint: 1, 1
+            id: code
+
+        Button:
+            text: 'close me'
+            size_hint_x: 0.5
+            size_hint_y: None
+            height: 50
+            on_release:
+                Input.dismiss()
+
+        Button:
+            text: 'Try Code!'
+            size_hint_x: 0.5
+            size_hint_y: None
+            height: 50
+            on_release:
+                Input.textBind(code.text)
 <FrontScreen>:
     FloatLayout:
         Image:
@@ -29,7 +58,7 @@
             size_hint: .2, .5
             pos: 300, 140
             on_press:
-                self.popup_display("type your code here:")
+                self.dispPop()
         Label:
             text: "Front"    
             
@@ -116,6 +145,8 @@
             on_press: 
                 root.manager.transition.direction = 'right'
                 root.manager.current = 'left'
+
+
 
 
 

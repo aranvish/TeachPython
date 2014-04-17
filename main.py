@@ -25,42 +25,31 @@ from functools import partial
 
 
 class ImgBtn(ButtonBehavior, Image):
-    def executeText(self, evt=None):
-        '''saves user input as a variable to be executed'''
-        userInput = self.userInput.text
+   
+    def dispPop(self):
+        name = textPopUp()
+        name.open()
+
+
+class textPopUp(Popup):
+    '''creates a popup object takes in text input and will execute it as a string and display
+    any errors that occur'''   
+    def textBind(self, userInput):
+        self.userInput = str(userInput)
         try:
-            exec(userInput)
+            exec(self.userInput)
         except:
             e = str(sys.exc_info()[0])
             self.showError(e)
-           
-            
     def showError(self, whatsWrong):
+        '''creates a popup which displays any errors that occur'''
         name = 'Oops, looks like there was an error'
         layout = BoxLayout(orientation = 'vertical', height = 200)
         text = Label(text = whatsWrong)
         layout.add_widget(text)
         error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
         error.open()
-        
-    def popup_display(self, title):
-        btnenter = Button(text = 'enter', size_hint_y = None, size_hint_x = 0.5, height =50)
-        btnclose = Button(text='Close me', size_hint_y=None, size_hint_x = 0.5, height=50)
-        self.userInput = TextInput(size_hint = (1,1))
 
-        layout = BoxLayout(orientation='vertical', height = 300)
-#        layout.add_widget(Label(text = message, size_hint = (1, 1)))
-        layout.add_widget(self.userInput)
-        layout.add_widget(btnenter)
-        layout.add_widget(btnclose)
-        sv = ScrollView(size_hint=(None, None), size=(300, 300),
-                        pos_hint={'center_x':0.5, 'center_y':.5})
-        sv.add_widget(layout)
-        popup = Popup(content=sv, title=title, size_hint=(None, None), size=(325, 350), auto_dismiss=True)
-        btnclose.bind(on_release=popup.dismiss)
-        btnenter.bind(on_release=self.executeText)
-        popup.open()
-        pass
 
 class FrontScreen(Screen):
     pass
