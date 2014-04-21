@@ -8,22 +8,15 @@
     pos: ctx.pos
     on_press:
         root.dispPop()
-    
-[Popup_text]:
-    title: 'TestApp'
-    size: 300,400
-    size_hint: None, None
-[Popup_input]:
-    
+   
 
-<textPopUp>:
+<textPopUp@Popup>:
     title: 'TestApp'
     size: 300, 400
     size_hint: None, None
     id: Input
     
     BoxLayout:
-
         orientation: 'vertical'
         TextInput:
             text: '#Type your code below'
