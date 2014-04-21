@@ -1,0 +1,32 @@
+PopUp for Door:
+
+Camera has detected motion near exit. Door has been closed for your safety.
+
+PopUp for random object:
+
+Here's a secret: If you want, I can be blue! Try typing: “object.makeblue()” it into your command line! 
+If you want to turn all of us blue, try typing 'for object in object_list:
+							object.makeblue()
+
+PopUp for Terminal:
+
+NaN, you're back! I've missed you so much! 
+Hmm, you want to leave? 
+That's easy, if you turn off all the lights, the camera won't be able to see you, but there are a lot of lights in this room. To turn them all off you'd need to use something powerful... like a For Loop.  
+
+A for loop allows you to do something to every object in a list, for example if you have a list, list = [1,2,3,4] and want to add one to each number you could write:
+
+for number in list:
+	number = number +1
+Pretty cool right?
+
+Anyway, if you ever get stuck in a room come find me, I'm so glad you're finally back!
+	
+
+PopUp for light:
+You want to know about me, why should I tell you any- 
+Wait, is that really you NaN?
+You're trying to leave, well, I don't know how to help you, but I do know that the reason I'm on is because my light value = 1, if I were set equal to 0, I'm sure that I would be turned off.
+I hope that helps!
+
+
