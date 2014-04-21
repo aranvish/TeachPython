@@ -2,7 +2,19 @@
 
 
 
-[Popup_Button@ButtonBehavior+Button]
+[Popup_Button@ImgBtn]:
+    source: ctx.img
+    size_hint: ctx.s_hint
+    pos: ctx.pos
+    on_press:
+        root.dispPop()
+    
+[Popup_text]:
+    title: 'TestApp'
+    size: 300,400
+    size_hint: None, None
+[Popup_input]:
+    
 
 <textPopUp>:
     title: 'TestApp'
@@ -61,12 +73,11 @@
             on_press: 
                 root.manager.transition.direction = 'right'
                 root.manager.current = 'right'
-        ImgBtn:
-            source: 'Assets_Door2.png'
-            size_hint: .2, .5
+        Popup_Button:
+            img: 'Assets_Door2.png'
+            s_hint: .2, .5
             pos: 300, 140
-            on_press:
-                self.dispPop()
+
    
             
 
