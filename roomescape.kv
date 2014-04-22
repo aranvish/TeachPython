@@ -7,9 +7,8 @@
     size_hint: ctx.s_hint
     pos: ctx.pos
     on_press:
-        root.dispPop()
+        root.dispPop(ctx.which_widg)
    
-
 <textPopUp@Popup>:
     title: 'TestApp'
     size: 300, 400
@@ -19,7 +18,7 @@
     BoxLayout:
         orientation: 'vertical'
         TextInput:
-            text: '#Type your code below'
+            text: root.text
             size_hint: 1, None
             height: 285
             id: code
@@ -42,6 +41,7 @@
                 height: 50
                 on_release:
                     Input.dismiss()
+
     
 
                 
@@ -70,6 +70,7 @@
             img: 'Assets_Door2.png'
             s_hint: .2, .5
             pos: 300, 140
+            which_widg: 'DoorButton'
 
    
             
@@ -128,9 +129,12 @@
             source: 'Assets_Table.png'
             size_hint: .75, .45
             pos: 90, 70
-        Image:
-            source: 'Assets_Lamp.png'   
-            pos: 1,20
+        Popup_Button:
+            img: 'Assets_Lamp.png'
+            s_hint: 1,1
+            pos: 1, 20
+            which_widg: 'LampButton'
+
 
 <BackScreen>:
     FloatLayout:

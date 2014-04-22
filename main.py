@@ -21,15 +21,24 @@ from kivy.uix.textinput import TextInput
 
 from functools import partial 
 
-
+import pdb
+import sys
 
 
 class ImgBtn(ButtonBehavior, Image):
    
-    def dispPop(self):
-        name = textPopUp()
+    def dispPop(self, which_widget):
+#        d = DoorButton()
+        dummydict = {"DoorButton":DoorButton(),"LampButton":LampButton()}
+        name =dummydict[which_widget]
         name.open()
-
+#        l = getattr(sys.modules[__name__],which_widget)
+#        pdb.set_trace()
+#        name.open()
+#        l.open()
+#        getattr(open, which_widget)
+#        name = which_widget()
+#        name.open()
 
 class textPopUp(Popup):
     '''creates a popup object takes in text input and will execute it as a string and display
@@ -50,6 +59,13 @@ class textPopUp(Popup):
         error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
         error.open()
 
+class DoorButton(textPopUp):
+    text='#I am a door'
+    pass
+
+class LampButton(textPopUp):
+    text = '#I am a lamp'
+    pass
 
 class FrontScreen(Screen):
     pass
