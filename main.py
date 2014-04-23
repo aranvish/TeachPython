@@ -32,17 +32,12 @@ class ImgBtn(ButtonBehavior, Image):
         dummydict = {"DoorButton":DoorButton(),"LampButton":LampButton(), "TableButton":TableButton()}
         name =dummydict[which_widget]
         name.open()
-#        l = getattr(sys.modules[__name__],which_widget)
-#        pdb.set_trace()
-#        name.open()
-#        l.open()
-#        getattr(open, which_widget)
-#        name = which_widget()
-#        name.open()
+
 
 class textPopUp(Popup):
     '''creates a popup object takes in text input and will execute it as a string and display
-    any errors that occur'''   
+    any errors that occur'''  
+    
     def textBind(self, userInput):
         self.userInput = str(userInput)
         try:
@@ -50,6 +45,7 @@ class textPopUp(Popup):
         except:
             e = str(sys.exc_info()[0])
             self.showError(e)
+
     def showError(self, whatsWrong):
         '''creates a popup which displays any errors that occur'''
         name = 'Oops, looks like there was an error'
@@ -58,6 +54,7 @@ class textPopUp(Popup):
         layout.add_widget(text)
         error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
         error.open()
+        
 
 class DoorButton(textPopUp):
     text='#I am a doorl'
