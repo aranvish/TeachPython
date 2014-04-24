@@ -29,7 +29,8 @@ class ImgBtn(ButtonBehavior, Image):
    
     def dispPop(self, which_widget):
 #        d = DoorButton()
-        dummydict = {"DoorButton":DoorButton(),"LampButton":LampButton(), "TableButton":TableButton()}
+        dummydict = {"DoorButton":DoorButton(),"LampButton":LampButton(), 
+                     "TableButton":TableButton(), "ComputerButton": ComputerButton()}
         name =dummydict[which_widget]
         name.open()
 
@@ -90,6 +91,24 @@ class TableButton(textPopUp):
     info += "    object.makeblue()'\n"    
     pass
 
+class ComputerButton(infoPopUp):
+    info = "NaN, you're back! I've missed you so much!\n"
+    info += "Hmm, you want to leave?\n\n"
+    info += "That's easy, if you turn off all the lights,\n"
+    info += "the camera won't be able to see you, but there\n"
+    info += "are a lot of lights in this room. To turn them\n"
+    info += "all off you'd need to use something powerful... \n"
+    info += "like a For Loop.\n\n"
+    info += "A for loop allows you to do something to every\n"
+    info += "object in a list, for example if you have a list,\n"
+    info += "list = [1,2,3,4] and want to add one to each number\n"
+    info += "you could write:/n/n"
+    info += "for number in list:\n"
+    info += "    number = number +1\n\n"
+    info += "Pretty cool right?/n/n"
+    info += "Anyway, if you ever get stuck in a room come find me,\n"
+    info += "I'm so glad you're finally back!"
+    pass
 
 class FrontScreen(Screen):
     pass
