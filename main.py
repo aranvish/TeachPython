@@ -55,6 +55,10 @@ class textPopUp(Popup):
         error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
         error.open()
         
+        
+class infoPopUp(Popup):
+    '''Just has a label which pops up on press'''
+    pass
 
 class DoorButton(textPopUp):
     text='#I am a doorl'
@@ -63,29 +67,27 @@ class DoorButton(textPopUp):
 
 class LampButton(textPopUp):
     text = '#I am a lamp'
-    line1 = "You want to know about me? \n" 
-    line2 = "Why should I tell you any-\n\n"
-    line3 = "Wait, is that really you NaN?\n\n"
-    line4 = "You're trying to leave? Well, \n"
-    line5 = "I don't know how to help you, but I do \n"
-    line6 = "know that the reason I'm on is because my \n"
-    line7 = "light value is equal to 1, if I were set \n"
-    line8 = "equal to 0, I'm sure that I would turn off.\n\n"
-    line9 = "I hope that helps!"
-    info = line1+line2+line3+line4+line5+line6+line7+line8+line9
+    info = "You want to know about me? \n" 
+    info += "Why should I tell you any-\n\n"
+    info += "Wait, is that really you NaN?\n\n"
+    info += "You're trying to leave? Well, \n"
+    info += "I don't know how to help you, but I do \n"
+    info += "know that the reason I'm on is because my \n"
+    info += "light value is equal to 1, if I were set \n"
+    info += "equal to 0, I'm sure that I would turn off.\n\n"
+    info += "I hope that helps!"
     pass
 
 class TableButton(textPopUp):
     text = '#I am a Table\n'
-    line1 = "Here's a secret:\n"
-    line2 = 'If you want, I can be blue!\n\n'
-    line3 = "Try typing: 'object.makeblue()\n"
-    line4 = "into your command line!\n\n"
-    line5 = "If you want to turn all of us blue,\n"
-    line6 = "try typing:\n"
-    line7 = "'for object in object_list:\n"
-    line8 = "    object.makeblue()'\n"    
-    info = line1 + line2 + line3 + line4 + line5 + line6 + line7 +line8
+    info = "Here's a secret:\n"
+    info += 'If you want, I can be blue!\n\n'
+    info += "Try typing: 'object.makeblue()\n"
+    info += "into your command line!\n\n"
+    info += "If you want to turn all of us blue,\n"
+    info += "try typing:\n"
+    info += "'for object in object_list:\n"
+    info += "    object.makeblue()'\n"    
     pass
 
 
