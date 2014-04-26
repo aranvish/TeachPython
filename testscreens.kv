@@ -1,0 +1,45 @@
+#kivy: 1.8.0
+
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import WipeTransition kivy.uix.screenmanager.WipeTransition
+
+StartScreen:
+
+<StartScreen>:
+    orientation: "vertical"
+    height: "200dp"
+    size_hint_y: None
+    GridLayout:
+        cols: 1
+        row_default_height: "40dp"
+        row_force_default: True
+        spacing: "10dp"
+        padding: "10dp"
+        Button:
+            size_hint: .75, .2
+            text: 'Start'
+            on_release:
+                root.manager.transition = FadeTransition()
+                root.manager.current = 'background'
+        Button:
+            size_hint: .75, .2
+            text: 'Exit'
+            on_release:
+                exit()
+
+
+<BackgroundScreen>:
+    FloatLayout:
+        Image:
+            source: 'Assets_Room.png'
+            size: self.size
+        Image:
+            source: 'genesect.png'
+            size: self.size
+        Button:
+            size_hint: 1,.1
+            text: 'Click Here'if self.state == 'normal' else 'You Clicked Here!'
+            pos: 1, 1
+            on_release:
+                root.manager.transition = WipeTransition()
+                root.manager.current = 'start'
