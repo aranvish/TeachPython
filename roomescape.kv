@@ -8,9 +8,27 @@
     pos: ctx.pos
     on_press:
         root.dispPop(ctx.which_widg)
+
+<infoPopUp@Popup>:
+    title: 'Room One'
+    size: 300, 400
+    size_hint: None, None
+    id: Words
+    
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: root.info
+            size_hint: 1,1
+        Button:
+            text: 'Close Me'
+            size_hint: None, None
+            height: 50
+            on_release:
+                Words.dismiss()
    
 <textPopUp@Popup>:
-    title: 'TestApp'
+    title: 'Room One'
     size: 600, 400
     size_hint: None, None
     id: Input
@@ -90,8 +108,11 @@
             size_hint: .01, .2
             pos: 200, 300
             on_press: root.manager.current = 'right'
-        Image:
-            source: "Assets_Terminal2.png"
+        Popup_Button:
+            img: "Assets_Terminal2.png"
+            s_hint: None, None
+            pos: 300, 200
+            which_widg: 'ComputerButton'
         ImgBtn:
             source: 'assets_arrows_left.png'
             text: 'go left'
