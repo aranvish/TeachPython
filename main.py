@@ -112,6 +112,9 @@ class ComputerButton(infoPopUp):
     info += "find me, I'm so glad you're finally back!"
     pass
 
+class StartScreen(Screen):
+    pass
+
 class FrontScreen(Screen):
     pass
 
@@ -141,11 +144,16 @@ class RoomEscapeApp(App):
         self.left_wall = LeftScreen(name = 'left')
         self.right_wall = RightScreen(name = 'right')
         self.back_wall = BackScreen(name = 'back')
-        sm = BackgroundScreenManager()
         sm.add_widget(self.front_wall)
         sm.add_widget(self.left_wall)
         sm.add_widget(self.right_wall)
         sm.add_widget(self.back_wall)
+
+        sm.add_widget(StartScreen(name = 'start'))
+        sm.add_widget(FrontScreen(name = 'front'))
+        sm.add_widget(LeftScreen(name = 'left'))
+        sm.add_widget(RightScreen(name = 'right'))
+        sm.add_widget(BackScreen(name = 'back'))
         return sm
         
     def light(self):
