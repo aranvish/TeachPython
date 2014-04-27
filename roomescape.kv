@@ -1,5 +1,7 @@
 #:kivy 1.8.0
-
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import WipeTransition kivy.uix.screenmanager.WipeTransition
 
 
 [Popup_Button@ImgBtn]:
@@ -65,8 +67,27 @@
                     on_release:
                         Input.textBind(code.text)
     
-    
-
+<StartScreen>:
+    orientation: "vertical"
+    height: "200dp"
+    size_hint_y: None
+    GridLayout:
+        cols: 1
+        row_default_height: "40dp"
+        row_force_default: True
+        spacing: "10dp"
+        padding: "10dp"
+        Button:
+            size_hint: .75, .2
+            text: 'Start'
+            on_release:
+                root.manager.transition = FadeTransition()
+                root.manager.current = 'front'
+        Button:
+            size_hint: .75, .2
+            text: 'Exit'
+            on_release:
+                exit()
                 
 <FrontScreen>:
     FloatLayout:
@@ -78,7 +99,7 @@
             text: 'go left'
             size_hint: .2,.2
             on_press: 
-                root.manager.transition.direction = 'left'
+                root.manager.transition = SlideTransition(direction = 'left')
                 root.manager.current = 'left'
             pos: 600,100
         ImgBtn:
@@ -87,7 +108,7 @@
             text: 'go right'
             pos: 1,100
             on_press: 
-                root.manager.transition.direction = 'right'
+                root.manager.transition = SlideTransition(direction = 'right')
                 root.manager.current = 'right'
         Popup_Button:
             img: 'Assets_Door2.png'

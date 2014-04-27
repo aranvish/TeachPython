@@ -110,6 +110,9 @@ class ComputerButton(infoPopUp):
     info += "I'm so glad you're finally back!"
     pass
 
+class StartScreen(Screen):
+    pass
+
 class FrontScreen(Screen):
     pass
 
@@ -132,6 +135,7 @@ class BackgroundScreenManager(ScreenManager):#creating a new screen manager so w
 class RoomEscapeApp(App):
     def build(self):
         sm = BackgroundScreenManager()
+        sm.add_widget(StartScreen(name = 'start'))
         sm.add_widget(FrontScreen(name = 'front'))
         sm.add_widget(LeftScreen(name = 'left'))
         sm.add_widget(RightScreen(name = 'right'))
