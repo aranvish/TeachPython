@@ -77,6 +77,7 @@ class LampButton(textPopUp):
     info += "light value is equal to 1, if I were set \n"
     info += "equal to 0, I'm sure that I would turn off.\n\n"
     info += "I hope that helps!"
+    on = True
     pass
 
 class TableButton(textPopUp):
@@ -94,20 +95,21 @@ class TableButton(textPopUp):
 class ComputerButton(infoPopUp):
     info = "NaN, you're back! I've missed you so much!\n"
     info += "Hmm, you want to leave?\n\n"
-    info += "That's easy, if you turn off all the lights,\n"
-    info += "the camera won't be able to see you, but there\n"
-    info += "are a lot of lights in this room. To turn them\n"
-    info += "all off you'd need to use something powerful... \n"
+    info += "That's easy, if you turn off all \n"
+    info += "the lights, the camera won't be able\n"
+    info += "to see you, but there are a lot of lights \n"
+    info += "in this room. To turn all off you'd need \n"
+    info += "to use something powerful... "
     info += "like a For Loop.\n\n"
-    info += "A for loop allows you to do something to every\n"
-    info += "object in a list, for example if you have a list,\n"
-    info += "list = [1,2,3,4] and want to add one to each number\n"
-    info += "you could write:/n/n"
+    info += "A for loop allows you to do something to \n"
+    info += "every object in a list, for example if \n"
+    info += "you have a list, list = [1,2,3,4] and want\n"
+    info += " to add one to each number you could write:\n\n"
     info += "for number in list:\n"
     info += "    number = number +1\n\n"
-    info += "Pretty cool right?/n/n"
-    info += "Anyway, if you ever get stuck in a room come find me,\n"
-    info += "I'm so glad you're finally back!"
+    info += "Pretty cool right?\n\n"
+    info += "Anyway, if you ever get stuck in a room come\n"
+    info += "find me, I'm so glad you're finally back!"
     pass
 
 class FrontScreen(Screen):
@@ -128,17 +130,28 @@ class BackgroundScreenManager(ScreenManager):#creating a new screen manager so w
     Image(source = 'elephant.gif')
     )
 
+class room(object):
+    def __init__(self):
+        self.light = 10
 
 class RoomEscapeApp(App):
+
     def build(self):
+        self.front_wall = FrontScreen(name = 'front')
+        self.left_wall = LeftScreen(name = 'left')
+        self.right_wall = RightScreen(name = 'right')
+        self.back_wall = BackScreen(name = 'back')
         sm = BackgroundScreenManager()
-        sm.add_widget(FrontScreen(name = 'front'))
-        sm.add_widget(LeftScreen(name = 'left'))
-        sm.add_widget(RightScreen(name = 'right'))
-        sm.add_widget(BackScreen(name = 'back'))
+        sm.add_widget(self.front_wall)
+        sm.add_widget(self.left_wall)
+        sm.add_widget(self.right_wall)
+        sm.add_widget(self.back_wall)
         return sm
         
+    def light(self):
+        self.room_light = 10
 
         
-
-RoomEscapeApp().run()
+esc = RoomEscapeApp()
+esc.build()
+esc.run()
