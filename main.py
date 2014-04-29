@@ -77,7 +77,6 @@ class LampButton(textPopUp):
     info += "light value is equal to 1, if I were set \n"
     info += "equal to 0, I'm sure that I would turn off.\n\n"
     info += "I hope that helps!"
-    on = True
     pass
 
 class TableButton(textPopUp):
@@ -135,7 +134,8 @@ class BackgroundScreenManager(ScreenManager):#creating a new screen manager so w
 
 class Light:
     def __init__(self,wall, my_pos):
-        self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = my_pos)
+        l = LampButton()
+        self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = my_pos, on_press = l.open)
         self.is_on = True
         wall.add_widget(self.widg)
 
