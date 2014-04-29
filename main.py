@@ -146,6 +146,7 @@ class Light:
         
     def check_is_on(self):
         if self.interface.is_on == False:
+            self.wall.remove_widget
             self.widg = ImgBtn(source = 'Assets_HangingLamp_off.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
             self.wall.add_widget(self.widg)
 class RoomEscapeApp(App):
