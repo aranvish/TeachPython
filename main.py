@@ -43,6 +43,9 @@ class textPopUp(Popup):
         self.userInput = str(userInput)
         try:
             exec(self.userInput)
+            for i in range(len(room1.light_list)):
+                room1.light_list[i].check_is_on()
+                
         except:
             e = str(sys.exc_info()[0])
             self.showError(e)
@@ -77,7 +80,7 @@ class LampButton(textPopUp):
     info += "light value is equal to 1, if I were set \n"
     info += "equal to 0, I'm sure that I would turn off.\n\n"
     info += "I hope that helps!"
-    on = True
+    is_on = True
     pass
 
 class TableButton(textPopUp):
@@ -135,10 +138,16 @@ class BackgroundScreenManager(ScreenManager):#creating a new screen manager so w
 
 class Light:
     def __init__(self,wall, my_pos):
-        self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = my_pos)
-        self.is_on = True
+        self.interface = LampButton()
+        self.wall = wall
+        self.my_pos = my_pos
+        self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
         wall.add_widget(self.widg)
-
+        
+    def check_is_on(self):
+        if self.interface.is_on == False:
+            self.widg = ImgBtn(source = 'Assets_HangingLamp_off.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
+            self.wall.add_widget(self.widg)
 class RoomEscapeApp(App):
 
     def build(self):
@@ -162,21 +171,22 @@ class RoomEscapeApp(App):
         return sm
    
     def makelights(self):
-        room1.front_wall.light1 = Light(self.front_wall,(100,450))
-        room1.front_wall.light2 = Light(self.front_wall,(500,450))
+        self.light1 = Light(self.front_wall,(100,450))
+        self.light2 = Light(self.front_wall,(500,450))
         
-        room1.left_wall.light4 = Light(self.left_wall,(300,450))
-        room1.left_wall.light5 = Light(self.left_wall,(500,450))
-        room1.left_wall.light6 = Light(self.left_wall,(100, 450))
+        self.light4 = Light(self.left_wall,(300,450))
+        self.light5 = Light(self.left_wall,(500,450))
+        self.light6 = Light(self.left_wall,(100, 450))
         
-        room1.right_wall.light7 = Light(self.right_wall,(300,450))
-        room1.right_wall.light8 = Light(self.right_wall,(200, 450))
-        room1.right_wall.light9 = Light(self.right_wall,(400, 450))
+        self.light7 = Light(self.right_wall,(300,450))
+        self.light8 = Light(self.right_wall,(200, 450))
+        self.light9 = Light(self.right_wall,(400, 450))
         
-        room1.back_wall.light11 = Light(self.back_wall,(300,450))
-        room1.back_wall.light3 = Light(self.back_wall,(200, 450))
-        room1.back_wall.light12 = Light(self.back_wall,(400, 450))
+        self.light11 = Light(self.back_wall,(300,450))
+        self.light3 = Light(self.back_wall,(200, 450))
+        self.light12 = Light(self.back_wall,(400, 450))
         
+        room1.light_list = [self.light1, self.light2, self.light3, self.light4, self.light5, self.light6, self.light7, self.light8, self.light9, self.light11, self.light12]
 
 
         
