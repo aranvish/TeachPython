@@ -133,9 +133,11 @@ class BackgroundScreenManager(ScreenManager):#creating a new screen manager so w
     Image(source = 'elephant.gif')
     )
 
-class room(object):
-    def __init__(self):
-        self.light = 10
+class Light:
+    def __init__(self,wall, my_pos):
+        self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = my_pos)
+        self.is_on = True
+        wall.add_widget(self.widg)
 
 class RoomEscapeApp(App):
 
@@ -144,6 +146,9 @@ class RoomEscapeApp(App):
         self.left_wall = LeftScreen(name = 'left')
         self.right_wall = RightScreen(name = 'right')
         self.back_wall = BackScreen(name = 'back')
+        
+        self.makelights()
+        
         sm = BackgroundScreenManager()
         sm.add_widget(self.front_wall)
         sm.add_widget(self.left_wall)
@@ -155,10 +160,27 @@ class RoomEscapeApp(App):
         sm.add_widget(RightScreen(name = 'right'))
         sm.add_widget(BackScreen(name = 'back'))
         return sm
+   
+    def makelights(self):
+        room1.front_wall.light1 = Light(self.front_wall,(100,450))
+        room1.front_wall.light2 = Light(self.front_wall,(500,450))
+        
+        room1.left_wall.light4 = Light(self.left_wall,(300,450))
+        room1.left_wall.light5 = Light(self.left_wall,(500,450))
+        room1.left_wall.light6 = Light(self.left_wall,(100, 450))
+        
+        room1.right_wall.light7 = Light(self.right_wall,(300,450))
+        room1.right_wall.light8 = Light(self.right_wall,(200, 450))
+        room1.right_wall.light9 = Light(self.right_wall,(400, 450))
+        
+        room1.back_wall.light11 = Light(self.back_wall,(300,450))
+        room1.back_wall.light3 = Light(self.back_wall,(200, 450))
+        room1.back_wall.light12 = Light(self.back_wall,(400, 450))
         
 
 
         
-esc = RoomEscapeApp()
-esc.build()
-esc.run()
+room1 = RoomEscapeApp()
+room1.build()
+#initialize widgets related to conditionals for the door
+room1.run()
