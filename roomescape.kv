@@ -13,7 +13,7 @@
 
 <infoPopUp@Popup>:
     title: 'Room1'
-    size: 300, 400
+    size: 350, 550
     size_hint: None, None
     id: Words
     
@@ -77,6 +77,8 @@
         row_force_default: True
         spacing: "10dp"
         padding: "10dp"
+        Label: 
+            text: 'NaN and the Power of Python!'
         Button:
             size_hint: .75, .2
             text: 'Start'
@@ -127,7 +129,7 @@
         Popup_Button:
             img: "Assets_Terminal2.png"
             s_hint: 0.1, 0.25
-            pos: 300, 200
+            pos: 350, 140
             which_widg: 'ComputerButton'
         ImgBtn:
             source: 'assets_arrows_left.png'
@@ -205,10 +207,3 @@
                 root.manager.current = 'left'
 
 
-
-<BackgroundScreenManager>
-    canvas.before:
-        BorderImage:
-            texture: self.bk_img.texture
-            pos: 300, 100
-            size: 300, 300

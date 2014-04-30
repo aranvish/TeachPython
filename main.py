@@ -65,36 +65,41 @@ class infoPopUp(Popup):
     pass
 
 class DoorButton(infoPopUp):
-    info = 'Camera has detected motion near exit. \n Door has been closed for your safety.'
+    info = 'Camera has detected motion near exit. \n Door has been closed for your safety.\n'
+    info += "It looks like you won't be able to exit. \n As long as the camera can see you, anyway."
     pass
 
 class LampButton(textPopUp):
     text = '#Anything that starts with # is a\n#comment (a note) '
     text += 'and will not be run\n'
     text += '#for example:\n'
-    text += '#self.is_on = True (turns me on)'
+    text += '#self.is_on = True (turns me on)\n'
     info = "You want to know about me? \n" 
     info += "Why should I tell you any-\n\n"
     info += "Wait, is that really you NaN?\n\n"
     info += "You're trying to leave? Well, \n"
     info += "I don't know how to help you, but I do \n"
     info += "know that the reason I'm on is because my \n"
-    info += "light value is equal to 1, if I were set \n"
-    info += "equal to 0, I'm sure that I would turn off.\n\n"
+    info += "is_on status is  'True'. If I were set \n"
+    info += "to 'False', I'm sure that I would go out.\n\n"
+    info += "To set my is_on status, type self.is_on = x\n"
+    info += "where x is either 'True' or 'False'!\n"
     info += "I hope that helps!"
     is_on = True
     pass
 
 class TableButton(textPopUp):
     text = '#I am a Table\n'
-    info = "Here's a secret:\n"
-    info += 'If you want, I can be blue!\n\n'
-    info += "Try typing: 'object.makeblue()\n"
-    info += "into your command line!\n\n"
-    info += "If you want to turn all of us blue,\n"
-    info += "try typing:\n"
-    info += "'for object in object_list:\n"
-    info += "    object.makeblue()'\n"    
+    text += '#So I have no code!\n'
+    info = "Hey, Nan!"
+    info += "I haven't seen you in a while. \n\n"
+    info += "Are you trying to escape the room? \n\n"
+    info += "Typing code at my terminal doesn't work, \n\n"
+    info += 'but I can still help you out.\n\n'
+    info += "To escape, turn off the rooms's lights. \n\n"
+    info += 'All of the lights are in a single list! \n\n'
+    info += "It's called room1.light_list \n\n"
+    info += "I'm sure that will help you."
     pass
 
 class ComputerButton(infoPopUp):
@@ -102,16 +107,16 @@ class ComputerButton(infoPopUp):
     info += "Hmm, you want to leave?\n\n"
     info += "That's easy, if you turn off all \n"
     info += "the lights, the camera won't be able\n"
-    info += "to see you, but there are a lot of lights \n"
-    info += "in this room. To turn all off you'd need \n"
+    info += "to see you. But there are a lot of lights \n"
+    info += "in this room! To turn all off you'd need \n"
     info += "to use something powerful... "
     info += "like a For Loop.\n\n"
     info += "A for loop allows you to do something to \n"
     info += "every object in a list, for example if \n"
     info += "you have a list, list = [1,2,3,4] and want\n"
     info += " to add one to each number you could write:\n\n"
-    info += "for number in list:\n"
-    info += "    number = number +1\n\n"
+    info += "for light in light_list:\n"
+    info += "    light.is_on = False\n\n"
     info += "Pretty cool right?\n\n"
     info += "Anyway, if you ever get stuck in a room come\n"
     info += "find me, I'm so glad you're finally back!"
@@ -134,9 +139,7 @@ class BackScreen(Screen):
     pass    
 
 class BackgroundScreenManager(ScreenManager):#creating a new screen manager so we can have lovely background images!
-    bk_img = ObjectProperty(
-    Image(source = 'elephant.gif')
-    )
+    bk_img = ObjectProperty()
 
 class Light:
     def __init__(self,wall, my_pos):
@@ -155,9 +158,13 @@ class Light:
     def turn_off(self):
         self.interface.is_on = False
         
+    def turn_on(self):
+        self.interface.is_on = True
+        
 class RoomEscapeApp(App):
 
     def build(self):
+        self.start_screen = StartScreen(name = 'start')
         self.front_wall = FrontScreen(name = 'front')
         self.left_wall = LeftScreen(name = 'left')
         self.right_wall = RightScreen(name = 'right')
@@ -166,6 +173,7 @@ class RoomEscapeApp(App):
         self.makelights()
         
         sm = BackgroundScreenManager()
+        sm.add_widget(self.start_screen)
         sm.add_widget(self.left_wall)
         sm.add_widget(self.front_wall)
         sm.add_widget(self.right_wall)
