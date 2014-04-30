@@ -64,13 +64,15 @@ class infoPopUp(Popup):
     '''Just has a label which pops up on press'''
     pass
 
-class DoorButton(textPopUp):
-    text='#I am a doorl'
+class DoorButton(infoPopUp):
     info = 'Camera has detected motion near exit. \n Door has been closed for your safety.'
     pass
 
 class LampButton(textPopUp):
-    text = '#I am a lamp'
+    text = '#Anything that starts with # is a\n#comment (a note) '
+    text += 'and will not be run\n'
+    text += '#for example:\n'
+    text += '#self.is_on = True (turns me on)'
     info = "You want to know about me? \n" 
     info += "Why should I tell you any-\n\n"
     info += "Wait, is that really you NaN?\n\n"
@@ -149,6 +151,10 @@ class Light:
             self.wall.remove_widget(self.widg)
             self.widg = ImgBtn(source = 'Assets_HangingLamp_off.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
             self.wall.add_widget(self.widg)
+            
+    def turn_off(self):
+        self.interface.is_on = False
+        
 class RoomEscapeApp(App):
 
     def build(self):
@@ -160,8 +166,8 @@ class RoomEscapeApp(App):
         self.makelights()
         
         sm = BackgroundScreenManager()
-        sm.add_widget(self.front_wall)
         sm.add_widget(self.left_wall)
+        sm.add_widget(self.front_wall)
         sm.add_widget(self.right_wall)
         sm.add_widget(self.back_wall)
         sm.add_widget(StartScreen(name = 'start'))
