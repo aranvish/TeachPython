@@ -30,7 +30,7 @@ class ImgBtn(ButtonBehavior, Image):
     def dispPop(self, which_widget):
 #        d = DoorButton()
         dummydict = {"DoorButton":DoorButton(),"LampButton":LampButton(), 
-                     "TableButton":TableButton(), "ComputerButton": ComputerButton()}
+                     "TableButton":TableButton(), "TableButton2":TableButton2(), "ComputerButton": ComputerButton()}
         name =dummydict[which_widget]
         name.open()
 
@@ -85,7 +85,7 @@ class LampButton(textPopUp):
     info += "'is_on' status is  'True'. If I were set \n"
     info += "to 'False', I'm sure that I would go out.\n\n"
     info += "To set my is_on status, type: \n"
-    info += "self.is_on = 'True' or 'False'!\n"
+    info += "self.is_on = True or False!\n"
     info += "and if you just want to turn me off,\n"
     info += "you can also type: self.turn_off()\n"
     info += "I hope that helps!\n\n\n\n"
@@ -98,8 +98,8 @@ class LampButton(textPopUp):
         self.is_on = True
 
 class TableButton(textPopUp):
-    text = '#I am a Table\n'
-    text += '#So I have no code!\n'
+    text = '#I am a Normal Table\n'
+    text += "#So I don't use code!\n"
     info = "Hey, NaN!\n"
     info += "I haven't seen you in a while. \n"
     info += "Are you trying to escape the room? \n"
@@ -111,13 +111,29 @@ class TableButton(textPopUp):
     info += "I'm sure that will help you."
     pass
 
+class TableButton2(textPopUp):
+    info = "Hey, NaN!\n"
+    info += "A list is a bunch of things put in \n brackets like these []\n"
+    info += "Items in lists are separated by commas!\n\n"
+    info += "Here's how to make a For Loop:\n"
+    info += "You can use For Loops \n to do boring things many times!\n"
+    info += "Start a for loop by typing:\n for value in list:\n"
+    info += "Remember to use a colon at the end!\n"
+    info += "Then, on the next line, type four spaces\n and write code"
+    info += "that you want repeated.\n"
+    info += "I hope that helps!"
+    text = "#Here's an example for loop!\n"
+    text += "#Click 'Try Code' to test it out!\n"
+    text += 'for number in range(0, 3):\n'
+    text += '   print number' 
+
 class ComputerButton(infoPopUp):
     info = "NaN, you're back! I've missed you so much!\n"
     info += "Hmm, you want to leave?\n\n"
     info += "That's easy, if you turn off all \n"
     info += "the lights, the camera won't be able\n"
     info += "to see you. But there are a lot of lights \n"
-    info += "in this room! To turn all off you'd need \n"
+    info += "in this room! To turn all the lights off you'd need \n"
     info += "to use something powerful... "
     info += "like a For Loop.\n\n"
     info += "A for loop allows you to do something to \n"
@@ -128,7 +144,8 @@ class ComputerButton(infoPopUp):
     info += "    light.turn_on()\n\n"
     info += "But remember For loops have Four spaces!\n"
     info += "Pretty cool right?\n\n"
-    info += "Anyway, if you ever get stuck in a room come\n"
+    info += "Click on the tables for more help if you need it!\n"
+    info += "But, if you ever get stuck in a later room, come\n"
     info += "find me."
     pass
 
