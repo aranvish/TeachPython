@@ -40,12 +40,15 @@ class textPopUp(Popup):
     any errors that occur'''  
     
     def textBind(self, userInput):
+        '''takes the user input from the kivy input terminal and binds it as
+        a string. Tries string to catch all errors, if none occur, runs the 
+        string. Also checks to see if any light values have been changed'''
         self.userInput = str(userInput)
         try:
             exec(self.userInput)
             for i in range(len(room1.light_list)):
                 room1.light_list[i].check_is_on()
-                
+                room1.updatelight()                
         except:
             e = str(sys.exc_info()[0])
             self.showError(e)
@@ -69,36 +72,42 @@ class DoorButton(infoPopUp):
     info += "It looks like you won't be able to exit. \n As long as the camera can see you, anyway."
     pass
 
+class RoomEnd(infoPopUp):
+    info = 'Congradulations! You beat the level!'
+
 class LampButton(textPopUp):
     text = '#Anything that starts with # is a\n#comment (a note) '
     text += 'and will not be run\n'
-    text += '#for example:\n'
-    text += '#self.is_on = True (turns me on)\n'
-    info = "You want to know about me? \n" 
-    info += "Why should I tell you any-\n\n"
-    info += "Wait, is that really you NaN?\n\n"
-    info += "You're trying to leave? Well, \n"
+    text += '#for example: #I am a Light!\n'
+    info = "You're trying to leave? Well, \n"
     info += "I don't know how to help you, but I do \n"
     info += "know that the reason I'm on is because my \n"
-    info += "is_on status is  'True'. If I were set \n"
+    info += "'is_on' status is  'True'. If I were set \n"
     info += "to 'False', I'm sure that I would go out.\n\n"
-    info += "To set my is_on status, type self.is_on = x\n"
-    info += "where x is either 'True' or 'False'!\n"
-    info += "I hope that helps!"
+    info += "To set my is_on status, type: \n"
+    info += "self.is_on = 'True' or 'False'!\n"
+    info += "and if you just want to turn me off,\n"
+    info += "you can also type: self.turn_off()\n"
+    info += "I hope that helps!\n\n\n\n"
     is_on = True
-    pass
+    
+    def turn_off(self):
+        self.is_on = False
+        
+    def turn_on(self):
+        self.is_on = True
 
 class TableButton(textPopUp):
     text = '#I am a Table\n'
     text += '#So I have no code!\n'
-    info = "Hey, Nan!"
-    info += "I haven't seen you in a while. \n\n"
-    info += "Are you trying to escape the room? \n\n"
-    info += "Typing code at my terminal doesn't work, \n\n"
-    info += 'but I can still help you out.\n\n'
-    info += "To escape, turn off the rooms's lights. \n\n"
-    info += 'All of the lights are in a single list! \n\n'
-    info += "It's called room1.light_list \n\n"
+    info = "Hey, NaN!\n"
+    info += "I haven't seen you in a while. \n"
+    info += "Are you trying to escape the room? \n"
+    info += "Typing code at my terminal doesn't work, \n"
+    info += 'but I can still help you out.\n'
+    info += "To escape, turn off the rooms's lights. \n"
+    info += 'All of the lights are in a single list! \n'
+    info += "It's called room1.light_list \n"
     info += "I'm sure that will help you."
     pass
 
@@ -113,13 +122,14 @@ class ComputerButton(infoPopUp):
     info += "like a For Loop.\n\n"
     info += "A for loop allows you to do something to \n"
     info += "every object in a list, for example if \n"
-    info += "you have a list, list = [1,2,3,4] and want\n"
-    info += " to add one to each number you could write:\n\n"
-    info += "for light in light_list:\n"
-    info += "    light.is_on = False\n\n"
+    info += "you have a list, list = [L1,L2,L3,L4] and want\n"
+    info += "to turn on every light you could write:\n\n"
+    info += "for light in list:\n"
+    info += "    light.turn_on()\n\n"
+    info += "But remember For loops have Four spaces!\n"
     info += "Pretty cool right?\n\n"
     info += "Anyway, if you ever get stuck in a room come\n"
-    info += "find me, I'm so glad you're finally back!"
+    info += "find me."
     pass
 
 class StartScreen(Screen):
@@ -146,20 +156,46 @@ class Light:
         self.interface = LampButton()
         self.wall = wall
         self.my_pos = my_pos
+        self.is_on = self.interface.is_on
         self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
         wall.add_widget(self.widg)
+
         
     def check_is_on(self):
+        '''changes the light image depending on whether the light is on or 
+        off'''
         if self.interface.is_on == False:
             self.wall.remove_widget(self.widg)
             self.widg = ImgBtn(source = 'Assets_HangingLamp_off.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
             self.wall.add_widget(self.widg)
+        else:
+            self.wall.remove_widget(self.widg)
+            self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
+            self.wall.add_widget(self.widg)
+            
             
     def turn_off(self):
         self.interface.is_on = False
         
     def turn_on(self):
         self.interface.is_on = True
+        
+        
+class Door:
+    def __init__(self,wall):
+        self.interface = DoorButton()
+        self.win = RoomEnd()
+        self.wall = wall
+        self.my_pos = 300, 140
+        self.widg = ImgBtn(source = 'Assets_Door.png', size_hint = (.2,.5), pos = self.my_pos, on_press = self.checklight())
+        wall.add_widget(self.widg)
+        
+    def checklight(self):
+        '''Tries to change the popup depending on the amount of light in the 
+        room'''
+        if room1.room_light == 0:
+            return self.win.open
+        return self.interface.open
         
 class RoomEscapeApp(App):
 
@@ -169,7 +205,11 @@ class RoomEscapeApp(App):
         self.left_wall = LeftScreen(name = 'left')
         self.right_wall = RightScreen(name = 'right')
         self.back_wall = BackScreen(name = 'back')
+        self.room_light = 11
+
         
+        self.light_list = []
+        self.makedoor()
         self.makelights()
         
         sm = BackgroundScreenManager()
@@ -179,13 +219,14 @@ class RoomEscapeApp(App):
         sm.add_widget(self.right_wall)
         sm.add_widget(self.back_wall)
         sm.add_widget(StartScreen(name = 'start'))
-        sm.add_widget(FrontScreen(name = 'front'))
         sm.add_widget(LeftScreen(name = 'left'))
+        sm.add_widget(FrontScreen(name = 'front'))
         sm.add_widget(RightScreen(name = 'right'))
         sm.add_widget(BackScreen(name = 'back'))
         return sm
    
     def makelights(self):
+        '''initializes all lights, adding them to the wall'''
         self.light1 = Light(self.front_wall,(100,450))
         self.light2 = Light(self.front_wall,(500,450))
         
@@ -201,9 +242,18 @@ class RoomEscapeApp(App):
         self.light3 = Light(self.back_wall,(200, 450))
         self.light12 = Light(self.back_wall,(400, 450))
         
-        room1.light_list = [self.light1, self.light2, self.light3, self.light4, self.light5, self.light6, self.light7, self.light8, self.light9, self.light11, self.light12]
-
-
+        self.light_list = [self.light1, self.light2, self.light3, self.light4, self.light5, self.light6, self.light7, self.light8, self.light9, self.light11, self.light12]
+        
+    def makedoor(self):
+        '''creates a door and adds to wall'''
+        self.door = Door(self.front_wall)        
+        
+    def updatelight(self):
+        '''updates the amount of light in the room'''
+        self.room_light = 0
+        for light in self.light_list:
+            if light.interface.is_on == True:
+                self.room_light += 1
         
 room1 = RoomEscapeApp()
 room1.build()

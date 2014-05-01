@@ -24,7 +24,7 @@
             size_hint: 1,1
         Button:
             text: 'Close Me'
-            size_hint: None, None
+            size_hint: 1, None
             height: 50
             on_release:
                 Words.dismiss()
@@ -112,13 +112,7 @@
             on_press: 
                 root.manager.transition = SlideTransition(direction = 'right')
                 root.manager.current = 'right'
-        Popup_Button:
-            img: 'Assets_Door2.png'
-            s_hint: .2, .5
-            pos: 300, 140
-            which_widg: 'DoorButton'
-
-   
+  
             
 
 <LeftScreen>:
@@ -175,14 +169,6 @@
             s_hint: .5, .5
             pos: 200, 70
             which_widg: 'TableButton'
-        Popup_Button:
-            img: 'Assets_Lamp.png'
-            s_hint: 0.25,0.25
-            pos: 300, 260
-            which_widg: 'LampButton'
-
-
-
 
 <BackScreen>:
     FloatLayout:
