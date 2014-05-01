@@ -73,7 +73,7 @@ class DoorButton(infoPopUp):
     pass
 
 class RoomEnd(infoPopUp):
-    info = 'Congradulations! You beat the level!'
+    info = 'Congratulations! You beat the level!'
 
 class LampButton(textPopUp):
     text = '#Anything that starts with # is a\n#comment (a note) '
@@ -172,6 +172,10 @@ class Light:
             self.wall.remove_widget(self.widg)
             self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
             self.wall.add_widget(self.widg)
+        if room1.room_light == 0:
+            self.wall.clear_widgets()
+            win = Label(text = 'Congratulations! You escaped the Room')
+            self.wall.add_widget(win)
             
             
     def turn_off(self):
@@ -187,15 +191,16 @@ class Door:
         self.win = RoomEnd()
         self.wall = wall
         self.my_pos = 300, 140
-        self.widg = ImgBtn(source = 'Assets_Door.png', size_hint = (.2,.5), pos = self.my_pos, on_press = self.checklight())
+        self.widg = ImgBtn(source = 'Assets_Door2.png', size_hint = (.2,.5), pos = self.my_pos, on_press = self.checklight(room1.room_light).open)
         wall.add_widget(self.widg)
         
-    def checklight(self):
+    def checklight(self, roomlight):
         '''Tries to change the popup depending on the amount of light in the 
         room'''
-        if room1.room_light == 0:
-            return self.win.open
-        return self.interface.open
+        print roomlight
+        if roomlight == 0:
+            return self.win
+        return self.interface
         
 class RoomEscapeApp(App):
 
@@ -250,10 +255,10 @@ class RoomEscapeApp(App):
         
     def updatelight(self):
         '''updates the amount of light in the room'''
-        self.room_light = 0
+        self.room_light = 11
         for light in self.light_list:
-            if light.interface.is_on == True:
-                self.room_light += 1
+            if light.interface.is_on == False:
+                self.room_light -=1
         
 room1 = RoomEscapeApp()
 room1.build()
