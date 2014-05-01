@@ -46,9 +46,12 @@ class textPopUp(Popup):
         self.userInput = str(userInput)
         try:
             exec(self.userInput)
+            old = room1.room_light
             for i in range(len(room1.light_list)):
                 room1.light_list[i].check_is_on()
-                room1.updatelight()                
+                room1.updatelight()  
+            if room1.room_light != old:
+                self.showchange(room1.room_light)
         except:
             e = str(sys.exc_info()[0])
             self.showError(e)
@@ -58,6 +61,14 @@ class textPopUp(Popup):
         name = 'Oops, looks like there was an error'
         layout = BoxLayout(orientation = 'vertical', height = 200)
         text = Label(text = whatsWrong)
+        layout.add_widget(text)
+        error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
+        error.open()
+        
+    def showchange(self,light_amount):
+        name = "Something's Changed!"
+        layout = BoxLayout(orientation = 'vertical', height = 200)
+        text = Label(text = 'There are now ' + str(light_amount) + ' lights on in the room.' )
         layout.add_widget(text)
         error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
         error.open()
@@ -76,19 +87,18 @@ class RoomEnd(infoPopUp):
     info = 'Congratulations! You beat the level!'
 
 class LampButton(textPopUp):
-    text = '#Anything that starts with # is a\n#comment (a note) '
-    text += 'and will not be run\n'
-    text += '#for example: #I am a Light!\n'
-    info = "You're trying to leave? Well, \n"
-    info += "I don't know how to help you, but I do \n"
-    info += "know that the reason I'm on is because my \n"
-    info += "'is_on' status is  'True'. If I were set \n"
-    info += "to 'False', I'm sure that I would go out.\n\n"
+    text = 'hi'
+    info = "You want to turn me off? Well, that's not too hard! \n"
+    info += "If you type would turn off.\n\n"
     info += "To set my is_on status, type: \n"
-    info += "self.is_on = True or False!\n"
-    info += "and if you just want to turn me off,\n"
+    info += "self.is_on = True or self.is_on = False!\n\n"
+    info += "When you type self, you choose me\n"
+    info += "instead of some other light and when you\n"
+    info += "type .is_on it means you want to know\n"
+    info += "my is_on state instead of someone else's!\n\n"
+    info += "OH! And if you just want to turn me off,\n"
     info += "you can also type: self.turn_off()\n"
-    info += "I hope that helps!\n\n\n\n"
+    info += "I hope that helps!\n\n"
     is_on = True
     
     def turn_off(self):
@@ -96,6 +106,9 @@ class LampButton(textPopUp):
         
     def turn_on(self):
         self.is_on = True
+        
+    def changetext(self, text):
+        self.text = text
 
 class TableButton(textPopUp):
     text = '#I am a Normal Table\n'
@@ -113,7 +126,7 @@ class TableButton(textPopUp):
 
 class TableButton2(textPopUp):
     info = "Hey, NaN!\n"
-    info += "A list is a bunch of things put in \n brackets like these []\n"
+    info += "A list is a bunch of things put in \n brackets like these [ ]\n"
     info += "Items in lists are separated by commas!\n\n"
     info += "Here's how to make a For Loop:\n"
     info += "You can use For Loops \n to do boring things many times!\n"
@@ -128,8 +141,7 @@ class TableButton2(textPopUp):
     text += '   print number' 
 
 class ComputerButton(infoPopUp):
-    info = "NaN, you're back! I've missed you so much!\n"
-    info += "Hmm, you want to leave?\n\n"
+    info = "Hmm, you want to leave?\n\n"
     info += "That's easy, if you turn off all \n"
     info += "the lights, the camera won't be able\n"
     info += "to see you. But there are a lot of lights \n"
@@ -138,7 +150,7 @@ class ComputerButton(infoPopUp):
     info += "like a For Loop.\n\n"
     info += "A for loop allows you to do something to \n"
     info += "every object in a list, for example if \n"
-    info += "you have a list, list = [L1,L2,L3,L4] and want\n"
+    info += "you have a list of lights and want\n"
     info += "to turn on every light you could write:\n\n"
     info += "for light in list:\n"
     info += "    light.turn_on()\n\n"
@@ -169,9 +181,10 @@ class BackgroundScreenManager(ScreenManager):#creating a new screen manager so w
     bk_img = ObjectProperty()
 
 class Light:
-    def __init__(self,wall, my_pos):
+    def __init__(self,wall, my_pos, list_index):
         self.interface = LampButton()
         self.wall = wall
+        self.interface.changetext('N0')
         self.my_pos = my_pos
         self.is_on = self.interface.is_on
         self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
@@ -249,20 +262,20 @@ class RoomEscapeApp(App):
    
     def makelights(self):
         '''initializes all lights, adding them to the wall'''
-        self.light1 = Light(self.front_wall,(100,450))
-        self.light2 = Light(self.front_wall,(500,450))
+        self.light1 = Light(self.front_wall,(100,450), 1)
+        self.light2 = Light(self.front_wall,(500,450), 1)
         
-        self.light4 = Light(self.left_wall,(300,450))
-        self.light5 = Light(self.left_wall,(500,450))
-        self.light6 = Light(self.left_wall,(100, 450))
+        self.light4 = Light(self.left_wall,(300,450), 3)
+        self.light5 = Light(self.left_wall,(500,450), 4)
+        self.light6 = Light(self.left_wall,(100, 450), 5)
         
-        self.light7 = Light(self.right_wall,(300,450))
-        self.light8 = Light(self.right_wall,(200, 450))
-        self.light9 = Light(self.right_wall,(400, 450))
+        self.light7 = Light(self.right_wall,(300,450), 6)
+        self.light8 = Light(self.right_wall,(200, 450),7)
+        self.light9 = Light(self.right_wall,(400, 450), 8)
         
-        self.light11 = Light(self.back_wall,(300,450))
-        self.light3 = Light(self.back_wall,(200, 450))
-        self.light12 = Light(self.back_wall,(400, 450))
+        self.light11 = Light(self.back_wall,(300,450), 9)
+        self.light3 = Light(self.back_wall,(200, 450), 10)
+        self.light12 = Light(self.back_wall,(400, 450), 11)
         
         self.light_list = [self.light1, self.light2, self.light3, self.light4, self.light5, self.light6, self.light7, self.light8, self.light9, self.light11, self.light12]
         
