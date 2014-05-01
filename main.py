@@ -68,8 +68,8 @@ class infoPopUp(Popup):
     pass
 
 class DoorButton(infoPopUp):
-    info = 'Camera has detected motion near exit. \n Door has been closed for your safety.\n'
-    info += "It looks like you won't be able to exit. \n As long as the camera can see you, anyway."
+    info = 'Camera has detected motion near exit. \nDoor has been closed for your safety.\n\n'
+    info += "It looks like you won't be able to exit. \nAs long as the camera can see you, anyway."
     pass
 
 class RoomEnd(infoPopUp):
