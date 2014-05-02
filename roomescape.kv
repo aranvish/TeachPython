@@ -11,15 +11,23 @@
     on_press:
         root.dispPop(ctx.which_widg)
 
+<WrapText@Label>
+    text_size: self.size
+    font_size: '10pt'
+    markup: True
+    padding_x: -10
+    padding_y: -10
+    valign: 'top'
+
 <infoPopUp@Popup>:
     title: 'Room1'
-    size: 350, 550
+    size: 350, 300
     size_hint: None, None
     id: Words
     
     BoxLayout:
         orientation: 'vertical'
-        Label:
+        WrapText:
             text: root.info
             size_hint: 1,1
         Button:
@@ -33,11 +41,13 @@
     title: 'Room1'
     size: 600, 400
     size_hint: None, None
+    pos: .5, .8
+    title: 'Info'
     id: Input
     
     BoxLayout:
         orientation: 'horizontal'
-        Label:
+        WrapText:
             text: root.info
             size_hint: 1, 1
         BoxLayout:
@@ -66,6 +76,39 @@
                     height: 50
                     on_release:
                         Input.textBind(code.text)
+
+<ComputerPanel>
+    size_hint: .75, .75
+    title: 'Computer Terminal'
+    id: Terminal
+    BoxLayout:
+        orientation: 'vertical'
+        TabbedPanel:
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            do_default_tab: False
+            TabbedPanelItem:
+                text: 'Home'
+                WrapText:
+                    text: "Hey, Nan!\n\nIt looks like you're trapped in here as long as the camera can see you. I can't do anything directly becase I'm just a terminal, but I can help you out!\n\nClick on any of the tabs above to learn about the code that you'll need to get out of the room. Also, feel free to come back to me any time to read these instructions again, if you need to!"
+                    markup: True
+                    valign: 'top'
+            TabbedPanelItem:
+                text: 'Lists'
+                WrapText:
+                    text: "[b]Lists[/b] are a way for you to group objects together. They are made up of objects set up in square brackets [like these] and are separated from one another by commas.\n\nFor example, say you had a Dog, a Cat, and a Bird, and you wanted to put them into a list. You could say:\n\n[Dog, Cat, Bird]\n\nBut that's not all! You also have to name a list when you make it; this is called [b]declaring a list.[/b]\nSay you wanted to call the list above 'AnimalList'. To do that in code, you write:\n\nAnimalList = [Dog, Cat, Bird]\n\nDon't forget to use an equal sign, and always keep the name of your list on the left side. Now whenever you type AnimalList into a coding box, you will refer to the list you made! Isn't that cool?"
+            TabbedPanelItem:
+                text: 'For Loops'
+                WrapText:
+                    text: "Let's move on to something a little more complicated. A [b]For Loop[/b] is a powerful type of code that lets you repeate a command multiple times. The format for a for loop is below:\n\nfor item in list:\n    item = 2\n\nWhen you write a for loop, you tell the computer to repeate an action once for every item you have in the list that you specify (you specify the name of a list by replacing 'list' with the actual\nlist name).\n\nThe word 'item' in the example above refers to the object in the list (remember those) the code is affecting. So in the code above, the for loop would go through every item in the original list, and change its value to two.\n\n[b]NOTE:[/b] For loops only work if the code after it is [b]indented four spaces[/b]. You can write multiple \nlines of code, but they all have to have the same indent in order to work."
+                    markup: True
+                    valign: 'top'
+        Button:
+            size_hint: 1, .1
+            text: 'Exit'
+            on_release:
+                Terminal.dismiss()
+
+
     
 <StartScreen>:
     orientation: "vertical"
@@ -124,7 +167,7 @@
             img: "Assets_Terminal2.png"
             s_hint: 0.1, 0.25
             pos: 350, 140
-            which_widg: 'ComputerButton'
+            which_widg: 'ComputerPanel'
         ImgBtn:
             source: 'assets_arrows_left.png'
             text: 'go left'

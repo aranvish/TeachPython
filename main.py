@@ -18,6 +18,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
+from kivy.uix.tabbedpanel import TabbedPanel
 
 from functools import partial 
 
@@ -30,7 +31,7 @@ class ImgBtn(ButtonBehavior, Image):
     def dispPop(self, which_widget):
 #        d = DoorButton()
         dummydict = {"DoorButton":DoorButton(),"LampButton":LampButton(), 
-                     "TableButton":TableButton(), "TableButton2":TableButton2(), "ComputerButton": ComputerButton()}
+                     "TableButton":TableButton(), "TableButton2":TableButton2(), "ComputerPanel":ComputerPanel()}
         name =dummydict[which_widget]
         name.open()
 
@@ -78,26 +79,29 @@ class infoPopUp(Popup):
     '''Just has a label which pops up on press'''
     pass
 
+class ComputerPanel(Popup):
+    '''Special info popup with tabbed panels for navigating on the computer'''
+    pass
+
 class DoorButton(infoPopUp):
     info = 'Camera has detected motion near exit. \nDoor has been closed for your safety.\n\n'
-    info += "It looks like you won't be able to exit. \nAs long as the camera can see you, anyway."
+    info += "It looks like you won't be able to exit [b]as long as the camera can see you.[/b]"
     pass
 
 class RoomEnd(infoPopUp):
     info = 'Congratulations! You beat the level!'
 
 class LampButton(textPopUp):
-    text = 'hi'
-    info = "You want to turn me off? Well, that's not too hard! \n"
-    info += "If you type would turn off.\n\n"
-    info += "To set my is_on status, type: \n"
+    text = ""
+    info = "You want to turn me off? Well, that's not too hard! \n\n"
+    info += "To set my is_on status, type: \n\n"
     info += "self.is_on = True or self.is_on = False!\n\n"
     info += "When you type self, you choose me\n"
     info += "instead of some other light and when you\n"
     info += "type .is_on it means you want to know\n"
     info += "my is_on state instead of someone else's!\n\n"
     info += "OH! And if you just want to turn me off,\n"
-    info += "you can also type: self.turn_off()\n"
+    info += "you can also type:\n\nself.turn_off()\n\n"
     info += "I hope that helps!\n\n"
     is_on = True
     
@@ -110,56 +114,16 @@ class LampButton(textPopUp):
     def changetext(self, text):
         self.text = text
 
-class TableButton(textPopUp):
-    text = '#I am a Normal Table\n'
-    text += "#So I don't use code!\n"
-    info = "Hey, NaN!\n"
-    info += "I haven't seen you in a while. \n"
+class TableButton(infoPopUp):
+    info = "Hey, NaN! I haven't seen you in a while.\n\n"
     info += "Are you trying to escape the room? \n"
-    info += "Typing code at my terminal doesn't work, \n"
+    info += "I can't write any code myself, \n"
     info += 'but I can still help you out.\n'
-    info += "To escape, turn off the rooms's lights. \n"
-    info += 'All of the lights are in a single list! \n'
-    info += "It's called room1.light_list \n"
-    info += "I'm sure that will help you."
+    info += "To escape, [b]turn off the rooms's lights.[/b] \n"
     pass
 
-class TableButton2(textPopUp):
-    info = "Hey, NaN!\n"
-    info += "A list is a bunch of things put in \n brackets like these [ ]\n"
-    info += "Items in lists are separated by commas!\n\n"
-    info += "Here's how to make a For Loop:\n"
-    info += "You can use For Loops \n to do boring things many times!\n"
-    info += "Start a for loop by typing:\n for value in list:\n"
-    info += "Remember to use a colon at the end!\n"
-    info += "Then, on the next line, type four spaces\n and write code"
-    info += "that you want repeated.\n"
-    info += "I hope that helps!"
-    text = "#Here's an example for loop!\n"
-    text += "#Click 'Try Code' to test it out!\n"
-    text += 'for number in range(0, 3):\n'
-    text += '   print number' 
-
-class ComputerButton(infoPopUp):
-    info = "Hmm, you want to leave?\n\n"
-    info += "That's easy, if you turn off all \n"
-    info += "the lights, the camera won't be able\n"
-    info += "to see you. But there are a lot of lights \n"
-    info += "in this room! To turn all the lights off you'd need \n"
-    info += "to use something powerful... "
-    info += "like a For Loop.\n\n"
-    info += "A for loop allows you to do something to \n"
-    info += "every object in a list, for example if \n"
-    info += "you have a list of lights and want\n"
-    info += "to turn on every light you could write:\n\n"
-    info += "for light in list:\n"
-    info += "    light.turn_on()\n\n"
-    info += "But remember For loops have Four spaces!\n"
-    info += "Pretty cool right?\n\n"
-    info += "Click on the tables for more help if you need it!\n"
-    info += "But, if you ever get stuck in a later room, come\n"
-    info += "find me."
-    pass
+class TableButton2(infoPopUp):
+    info = "Hey, NaN!\nI am but a lowly table, I can't do much But I know\nthe name of the list all of the lights are in!\n\nIt's [b]room1.light_list[/b]\n\nI hope that helps!"
 
 class StartScreen(Screen):
     pass
