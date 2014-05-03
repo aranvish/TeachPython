@@ -77,6 +77,11 @@
                     height: 50
                     on_release:
                         Input.textBind(code.text)
+<OpenDoor@ImgBtn>:
+    source: ''
+    on_press: screenmanager.current = 'start'
+    pos: 300, 140
+
 
 <ComputerPanel>
     size_hint: .75, .75

@@ -30,7 +30,7 @@ class ImgBtn(ButtonBehavior, Image):
    
     def dispPop(self, which_widget):
 #        d = DoorButton()
-        dummydict = {"DoorButton":DoorButton(),"LampButton":LampButton(), 
+        dummydict = {"DoorButton":DoorButton2(),"LampButton":LampButton(), 
                      "TableButton":TableButton(), "TableButton2":TableButton2(), "ComputerPanel":ComputerPanel()}
         name =dummydict[which_widget]
         name.open()
@@ -54,6 +54,8 @@ class textPopUp(Popup):
         except:
             e = str(sys.exc_info()[0])
             self.showError(e)
+        if room1.room_light == 0:
+            room1.door.opendoor()
 
     def showError(self, whatsWrong):
         '''creates a popup which displays any errors that occur'''
@@ -73,6 +75,12 @@ class ComputerPanel(Popup):
     '''Special info popup with tabbed panels for navigating on the computer'''
     pass
 
+class DoorButton2(infoPopUp):
+    info = 'Camera has detected motion near exit. \nDoor has been closed for your safety.\n\n'
+    info += "It looks like you won't be able to exit [b]as long as the camera can see you.[/b]"
+    pass
+    
+    
 class DoorButton(infoPopUp):
     info = 'Camera has detected motion near exit. \nDoor has been closed for your safety.\n\n'
     info += "It looks like you won't be able to exit [b]as long as the camera can see you.[/b]"
@@ -156,11 +164,11 @@ class Light:
             self.wall.remove_widget(self.widg)
             self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
             self.wall.add_widget(self.widg)
-        if room1.room_light == 0:
-            self.wall.clear_widgets()
-            win = Label(text = 'Congratulations! You escaped the Room')
-            self.wall.add_widget(win)
-            
+#        if room1.room_light == 0:
+#            self.wall.clear_widgets()
+#            win = Label(text = 'Congratulations! You escaped the Room')
+#            self.wall.add_widget(win)
+#            
             
     def turn_off(self):
         self.interface.is_on = False
@@ -171,12 +179,13 @@ class Light:
         
 class Door:
     def __init__(self,wall):
-        self.interface = DoorButton()
+        self.interface = DoorButton2()
         self.win = RoomEnd()
         self.wall = wall
         self.my_pos = 300, 140
-        self.widg = ImgBtn(source = 'Assets_Door2.png', size_hint = (.2,.5), pos = self.my_pos, on_press = self.checklight(room1.room_light).open)
+        self.widg = ImgBtn(source = 'Assets_Door2.png', size_hint = (.2,.5), pos = self.my_pos, on_press = self.interface.open)
         wall.add_widget(self.widg)
+        
         
     def checklight(self, roomlight):
         '''Tries to change the popup depending on the amount of light in the 
@@ -185,6 +194,14 @@ class Door:
         if roomlight == 0:
             return self.win
         return self.interface
+        
+    def opendoor(self):
+        '''removes the current door widget and replaces it with an open door widget'''
+        self.wall.remove_widget(self.widg)
+        self.widg = ImgBtn(source = 'Assets_Door_Open.png', size_hint = (.25,.25), pos = self.my_pos, on_press = room1.leaveroom())
+        self.wall.add_widget(self.widg)
+
+
         
 class RoomEscapeApp(App):
 
@@ -243,6 +260,12 @@ class RoomEscapeApp(App):
         for light in self.light_list:
             if light.interface.is_on == False:
                 self.room_light -=1
+    def leaveroom(self):
+        self.clear_widgets()
+        self.add_widget(start_screen)
+                
+
+    
         
 room1 = RoomEscapeApp()
 room1.build()
