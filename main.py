@@ -51,8 +51,6 @@ class textPopUp(Popup):
             for i in range(len(room1.light_list)):
                 room1.light_list[i].check_is_on()
                 room1.updatelight()  
-            if room1.room_light != old:
-                self.showchange(room1.room_light)
         except:
             e = str(sys.exc_info()[0])
             self.showError(e)
@@ -62,14 +60,6 @@ class textPopUp(Popup):
         name = 'Oops, looks like there was an error'
         layout = BoxLayout(orientation = 'vertical', height = 200)
         text = Label(text = whatsWrong)
-        layout.add_widget(text)
-        error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
-        error.open()
-        
-    def showchange(self,light_amount):
-        name = "Something's Changed!"
-        layout = BoxLayout(orientation = 'vertical', height = 200)
-        text = Label(text = 'There are now ' + str(light_amount) + ' lights on in the room.' )
         layout.add_widget(text)
         error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
         error.open()
