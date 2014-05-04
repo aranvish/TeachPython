@@ -27,12 +27,12 @@ import sys
 
 
 class ImgBtn(ButtonBehavior, Image):
+    '''Creates an image with the buttonbehavior of a Kivy button, so you can click on objects and they launch popups, etc'''
    
     def dispPop(self, which_widget):
-#        d = DoorButton()
         dummydict = {"DoorButton":DoorButton(),"LampButton":LampButton(), 
                      "TableButton":TableButton(), "TableButton2":TableButton2(), "ComputerPanel":ComputerPanel()}
-        name =dummydict[which_widget]
+        name =dummydict[which_widget] #Uses the dictionary to specify which button we want to call depending on what class we're working in
         name.open()
 
 
@@ -45,20 +45,20 @@ class textPopUp(Popup):
         a string. Tries string to catch all errors, if none occur, runs the 
         string. Also checks to see if any light values have been changed'''
         self.userInput = str(userInput)
-        try:
+        try: #Python will attempt to execute the textinput put into a textbox as code; hopefully, you, you know, typed code into the code input instead of writing a novel
             exec(self.userInput)
-            old = room1.room_light
             for i in range(len(room1.light_list)):
                 room1.light_list[i].check_is_on()
                 room1.updatelight()  
-        except:
+        except: #If the code produces an error, a popup appears telling the user they typed code improperly
             e = str(sys.exc_info()[0])
             self.showError(e)
 
     def showError(self, whatsWrong):
-        '''creates a popup which displays any errors that occur'''
+        '''If textBind detects an error in the code it tries to execute, showError
+        will create a popup on the screen that informs the user of what they did wrong'''
         name = 'Oops, looks like there was an error'
-        layout = BoxLayout(orientation = 'vertical', height = 200)
+        layout = BoxLayout(orientation = 'vertical', height = 200) #Everything here is just layout stuff
         text = Label(text = whatsWrong)
         layout.add_widget(text)
         error = Popup(content = layout, title = name, size_hint =(None, None), size = (300, 100), auto_dismiss= True)
@@ -66,19 +66,24 @@ class textPopUp(Popup):
         
         
 class infoPopUp(Popup):
-    '''Just has a label which pops up on press'''
+    '''Creates an infopopup. In our kivy file, we define an infopopup as a popup 
+    with no text input, and that has a button that closes the popup when pressed.
+    As you can guess, they're meant to provide information.'''
     pass
 
 class ComputerPanel(Popup):
-    '''Special info popup with tabbed panels for navigating on the computer'''
+    '''Special info popup with tabbed panels for navigating on the computer.
+    In the Kivy file the comptuer panel becomes a popup with tabbed elements,
+    each tab has a bit of information on how to type code relating to lists and for loops.'''
     pass
 
 class DoorButton(infoPopUp):
+    '''subclass of infoPopUp that we use for the door. Below is just the text that pops up when you click it'''
     info = 'Camera has detected motion near exit. \nDoor has been closed for your safety.\n\n'
     info += "It looks like you won't be able to exit [b]as long as the camera can see you.[/b]"
     pass
 
-class RoomEnd(infoPopUp):
+class RoomEnd(infoPopUp): #Popup that shows up when you win
     info = 'Congratulations! You beat the level!'
 
 class LampButton(textPopUp):
