@@ -71,19 +71,21 @@ class infoPopUp(Popup):
     '''Just has a label which pops up on press'''
     pass
 
+class ExitGamePopup(Popup):
+    pass
+
 class ComputerPanel(Popup):
     '''Special info popup with tabbed panels for navigating on the computer'''
     pass
 
-class DoorButton2(infoPopUp):
-    info = 'Camera has detected motion near exit. \nDoor has been closed for your safety.\n\n'
-    info += "It looks like you won't be able to exit [b]as long as the camera can see you.[/b]"
+class DoorButton2(ExitGamePopup):
+    info = "You've escaped!"
     pass
     
     
 class DoorButton(infoPopUp):
     info = 'Camera has detected motion near exit. \nDoor has been closed for your safety.\n\n'
-    info += "It looks like you won't be able to exit [b]as long as the camera can see you.[/b]"
+    info += "It looksdjf;dklasfd;aklsfjd;salkfjd;klafjd;alksfjs like you won't be able to exit [b]as long as the camera can see you.[/b]"
     pass
 
 class RoomEnd(infoPopUp):
@@ -179,7 +181,7 @@ class Light:
         
 class Door:
     def __init__(self,wall):
-        self.interface = DoorButton2()
+        self.interface = DoorButton()
         self.win = RoomEnd()
         self.wall = wall
         self.my_pos = 300, 140
@@ -198,8 +200,10 @@ class Door:
     def opendoor(self):
         '''removes the current door widget and replaces it with an open door widget'''
         self.wall.remove_widget(self.widg)
-        self.widg = ImgBtn(source = 'Assets_Door_Open.png', size_hint = (.25,.25), pos = self.my_pos, on_press = room1.leaveroom())
+        self.interface = DoorButton2()
+        self.widg = ImgBtn(source = 'Assets_Door_Open.png', size_hint = (.25,.25), pos = self.my_pos, on_release = self.interface.open)
         self.wall.add_widget(self.widg)
+
 
 
         
@@ -261,8 +265,8 @@ class RoomEscapeApp(App):
             if light.interface.is_on == False:
                 self.room_light -=1
     def leaveroom(self):
-        self.clear_widgets()
-        self.add_widget(start_screen)
+        self.front_wall.clear_widgets()
+        self.front_wall.add_widget(self.start_screen)
                 
 
     
