@@ -11,6 +11,18 @@
     on_press:
         root.dispPop(ctx.which_widg)
 
+<ExitGamePopup@Popup>:
+    title: 'Escape!'
+    size: 350, 300
+    size_hint: .5, .5
+    BoxLayout:
+        Button:
+            text: 'Escape!'
+            size_hint: 1, 1
+            height: 50
+            on_release:
+                exit()
+
 <WrapText@Label>
     text_size: self.size
     font_size: '10pt'
@@ -77,6 +89,11 @@
                     height: 50
                     on_release:
                         Input.textBind(code.text)
+<OpenDoor@ImgBtn>:
+    source: ''
+    on_press: screenmanager.current = 'start'
+    pos: 300, 140
+
 
 <ComputerPanel>
     size_hint: .75, .75
@@ -108,8 +125,6 @@
             text: 'Exit'
             on_release:
                 Terminal.dismiss()
-
-
     
 <StartScreen>:
     orientation: "vertical"

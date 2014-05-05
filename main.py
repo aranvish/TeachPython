@@ -30,7 +30,12 @@ class ImgBtn(ButtonBehavior, Image):
     '''Creates an image with the buttonbehavior of a Kivy button, so you can click on objects and they launch popups, etc'''
    
     def dispPop(self, which_widget):
+<<<<<<< HEAD
         dummydict = {"DoorButton":DoorButton(),"LampButton":LampButton(), 
+=======
+#        d = DoorButton()
+        dummydict = {"DoorButton":DoorButton2(),"LampButton":LampButton(), 
+>>>>>>> 86a562a8ee69d0e86fb28da334354ce680fe6233
                      "TableButton":TableButton(), "TableButton2":TableButton2(), "ComputerPanel":ComputerPanel()}
         name =dummydict[which_widget] #Uses the dictionary to specify which button we want to call depending on what class we're working in
         name.open()
@@ -53,6 +58,8 @@ class textPopUp(Popup):
         except: #If the code produces an error, a popup appears telling the user they typed code improperly
             e = str(sys.exc_info()[0])
             self.showError(e)
+        if room1.room_light == 0:
+            room1.door.opendoor()
 
     def showError(self, whatsWrong):
         '''If textBind detects an error in the code it tries to execute, showError
@@ -71,22 +78,30 @@ class infoPopUp(Popup):
     As you can guess, they're meant to provide information.'''
     pass
 
+class ExitGamePopup(Popup):
+    pass
+
 class ComputerPanel(Popup):
     '''Special info popup with tabbed panels for navigating on the computer.
     In the Kivy file the comptuer panel becomes a popup with tabbed elements,
     each tab has a bit of information on how to type code relating to lists and for loops.'''
     pass
 
+class DoorButton2(ExitGamePopup):
+    info = "You've escaped!"
+    pass
+    
+    
 class DoorButton(infoPopUp):
     '''subclass of infoPopUp that we use for the door. Below is just the text that pops up when you click it'''
     info = 'Camera has detected motion near exit. \nDoor has been closed for your safety.\n\n'
-    info += "It looks like you won't be able to exit [b]as long as the camera can see you.[/b]"
+    info += "It looksdjf;dklasfd;aklsfjd;salkfjd;klafjd;alksfjs like you won't be able to exit [b]as long as the camera can see you.[/b]"
     pass
 
 class RoomEnd(infoPopUp): #Popup that shows up when you win
     info = 'Congratulations! You beat the level!'
 
-class LampButton(textPopUp):
+class LampButton(textPopUp): #Popup that sets text when you click on a lamp
     text = ""
     info = "You want to turn me off? Well, that's not too hard! \n\n"
     info += "To set my is_on status, type: \n\n"
@@ -100,16 +115,16 @@ class LampButton(textPopUp):
     info += "I hope that helps!\n\n"
     is_on = True
     
-    def turn_off(self):
+    def turn_off(self): #Function that turns off lamps
         self.is_on = False
         
-    def turn_on(self):
+    def turn_on(self): #Function that turns on light. Not actually used in the game but works
         self.is_on = True
         
-    def changetext(self, text):
+    def changetext(self, text): #Function that changes text
         self.text = text
 
-class TableButton(infoPopUp):
+class TableButton(infoPopUp): #Infopopup provided for table 1
     info = "Hey, NaN! I haven't seen you in a while.\n\n"
     info += "Are you trying to escape the room? \n"
     info += "I can't write any code myself, \n"
@@ -117,10 +132,10 @@ class TableButton(infoPopUp):
     info += "To escape, [b]turn off the rooms's lights.[/b] \n"
     pass
 
-class TableButton2(infoPopUp):
+class TableButton2(infoPopUp): #Different popup for Table 2
     info = "Hey, NaN!\nI am but a lowly table, I can't do much But I know\nthe name of the list all of the lights are in!\n\nIt's [b]room1.light_list[/b]\n\nI hope that helps!"
 
-class StartScreen(Screen):
+class StartScreen(Screen): #Just initializing all of the screens we use so we can place everything in Kivy. Otherwise this is super boring code
     pass
 
 class FrontScreen(Screen):
@@ -139,7 +154,7 @@ class BackScreen(Screen):
 class BackgroundScreenManager(ScreenManager):#creating a new screen manager so we can have lovely background images!
     bk_img = ObjectProperty()
 
-class Light:
+class Light: #Creates a lamp that we can place in the room on a wall
     def __init__(self,wall, my_pos, list_index):
         self.interface = LampButton()
         self.wall = wall
@@ -161,11 +176,11 @@ class Light:
             self.wall.remove_widget(self.widg)
             self.widg = ImgBtn(source = 'Assets_HangingLamp_on.png', size_hint = (.25,.25), pos = self.my_pos, on_press = self.interface.open)
             self.wall.add_widget(self.widg)
-        if room1.room_light == 0:
-            self.wall.clear_widgets()
-            win = Label(text = 'Congratulations! You escaped the Room')
-            self.wall.add_widget(win)
-            
+#        if room1.room_light == 0:
+#            self.wall.clear_widgets()
+#            win = Label(text = 'Congratulations! You escaped the Room')
+#            self.wall.add_widget(win)
+#            
             
     def turn_off(self):
         self.interface.is_on = False
@@ -174,14 +189,15 @@ class Light:
         self.interface.is_on = True
         
         
-class Door:
+class Door: #Initializes a door object in much the same way as Light works
     def __init__(self,wall):
         self.interface = DoorButton()
         self.win = RoomEnd()
         self.wall = wall
         self.my_pos = 300, 140
-        self.widg = ImgBtn(source = 'Assets_Door2.png', size_hint = (.2,.5), pos = self.my_pos, on_press = self.checklight(room1.room_light).open)
+        self.widg = ImgBtn(source = 'Assets_Door2.png', size_hint = (.2,.5), pos = self.my_pos, on_press = self.interface.open)
         wall.add_widget(self.widg)
+        
         
     def checklight(self, roomlight):
         '''Tries to change the popup depending on the amount of light in the 
@@ -191,9 +207,19 @@ class Door:
             return self.win
         return self.interface
         
+    def opendoor(self):
+        '''removes the current door widget and replaces it with an open door widget'''
+        self.wall.remove_widget(self.widg)
+        self.interface = DoorButton2() #DoorButton2 allows the user to escape the room when they click on it, unlike regular DoorButton
+        self.widg = ImgBtn(source = 'Assets_Door_Open.png', size_hint = (.25,.25), pos = self.my_pos, on_release = self.interface.open)
+        self.wall.add_widget(self.widg)
+
+
+
+        
 class RoomEscapeApp(App):
 
-    def build(self):
+    def build(self): #Establishses a screen manager with all of the screens we use for navigation, names all of the screens
         self.start_screen = StartScreen(name = 'start')
         self.front_wall = FrontScreen(name = 'front')
         self.left_wall = LeftScreen(name = 'left')
@@ -219,7 +245,7 @@ class RoomEscapeApp(App):
         sm.add_widget(BackScreen(name = 'back'))
         return sm
    
-    def makelights(self):
+    def makelights(self): #Makes every instance of a light we have in the room and places it in the room.
         '''initializes all lights, adding them to the wall'''
         self.light1 = Light(self.front_wall,(100,450), 1)
         self.light2 = Light(self.front_wall,(500,450), 1)
@@ -238,16 +264,22 @@ class RoomEscapeApp(App):
         
         self.light_list = [self.light1, self.light2, self.light3, self.light4, self.light5, self.light6, self.light7, self.light8, self.light9, self.light11, self.light12]
         
-    def makedoor(self):
+    def makedoor(self): #Makes an instance of a door
         '''creates a door and adds to wall'''
         self.door = Door(self.front_wall)        
         
-    def updatelight(self):
+    def updatelight(self): #Checks every time you input code if the lights are off
         '''updates the amount of light in the room'''
         self.room_light = 11
         for light in self.light_list:
             if light.interface.is_on == False:
                 self.room_light -=1
+    def leaveroom(self): #Lets you leave the room
+        self.front_wall.clear_widgets()
+        self.front_wall.add_widget(self.start_screen)
+                
+
+    
         
 room1 = RoomEscapeApp()
 room1.build()
